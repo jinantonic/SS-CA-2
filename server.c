@@ -54,7 +54,7 @@ int main() { // Main function
 
 	pthread_mutex_init(&lock_x, NULL); // Initialise mutex lock
 
-    //Server will continually loop through as long as it's running waiting for any clinet connections
+    	//Server will continually loop through as long as it's running waiting for any clinet connections
 	while ((client_sock = accept(socket_des, (struct sockaddr *) &client, (socklen_t *) &con_size))) { // While there is a connection
 		if (pthread_create(&client_conn[thread_count], NULL, connection_handler, (void*) &client_sock) < 0) { // If thread creation fails
 			perror("Error creating thread!"); // Print error
@@ -81,8 +81,8 @@ void *connection_handler(void *socket_des) { // Thread handler
 		exit(EXIT_FAILURE); // Exit
 	} // end if
 
-    client_user_id = ntohl(client_user_id); // Convert to network byte order
-    printf("Client id: %d\n", client_user_id); // Print client ID
+    	client_user_id = ntohl(client_user_id); // Convert to network byte order
+   	printf("Client id: %d\n", client_user_id); // Print client ID
 	printf("\nLocking the thread...\n"); // Print locking thread
 
 	pthread_mutex_lock(&lock_x); // Lock mutex
@@ -93,7 +93,7 @@ void *connection_handler(void *socket_des) { // Thread handler
 	struct group *authorised_transfer_group; // Authorised transfer group
 
 	char *user_name = user_info -> pw_name; // User name
-    printf("Client id: %s\n", user_name); // Print client ID
+    	printf("Client id: %s\n", user_name); // Print client ID
 
 	int ngroups = 20; // Number of groups
 	groups = malloc(ngroups * sizeof(gid_t)); // Allocate memory for groups
@@ -119,7 +119,7 @@ void *connection_handler(void *socket_des) { // Thread handler
 
 	seteuid(client_user_id); // Set effective user ID
 
-    memset(message,'\0',sizeof(message)); // Clear message buffer
+    	memset(message,'\0',sizeof(message)); // Clear message buffer
 	
 	READSIZE = recv(sock, message, 500, 0); // Receive directory from client
 
@@ -199,7 +199,7 @@ void *connection_handler(void *socket_des) { // Thread handler
 	printf("\nSuccefully transferred file to %s\nUnlocking thread\n", directory); // Print successfully transferred file to directory
 
 	pthread_mutex_unlock(&lock_x); // Unlock mutex
-    memset(message,'\0',sizeof(message)); // Clear message buffer
+    	memset(message,'\0',sizeof(message)); // Clear message buffer
 
 	if (READSIZE == 0) { // If read size is 0
 		puts("Client disconnected successfully.\n"); // Print client disconnected successfully
