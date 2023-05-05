@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
 	if (SID == -1) { // If socket was not created
         printf("Error! Socket creation failed.\n"); // Print error message
     } else { // If socket was created
-        printf("Socket has been created successfully..\n");   
+        printf("Socket has been created successfully.\n");   
     } // End if statement
 
 	server.sin_port = htons (8082); // Set port
