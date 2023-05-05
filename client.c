@@ -62,7 +62,7 @@ int main(int argc, char *argv[]) {
 
 	if (write(SID, dir, strlen(dir)) < 0) { // If sending directory failed
 		perror("Sending directory to server failed:1\n"); // Print error message
-       	return 1; 
+       		return 1; 
 	} // end if
 
 	if (recv(SID, server_message, strlen("Just_received_the_directory"), 0) < 0) { // If receiving message failed
