@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
 	
 	uid_t uid, c_uid; // User id, converted user id
 
-    memset(server_message,'\0',sizeof(server_message)); // Clear server message buffer
+    	memset(server_message,'\0',sizeof(server_message)); // Clear server message buffer
 	printf("File name passed from argument: %s\n", filename); // Print file name
 
 	if (!(strcmp(dir, "manufacturing") == 0 || strcmp(dir, "distribution") == 0)) { // Check if directory is valid
@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 		return 1;
 	} // end if
 
-    memset(server_message,'\0',sizeof(server_message)); // Clear server message buffer
+    	memset(server_message,'\0',sizeof(server_message)); // Clear server message buffer
 	
 	if (recv(SID, server_message, 500, 0) < 0) { // If receiving message failed
 		perror("Error receiving data fromm server!\n"); // Print error message
@@ -101,8 +101,8 @@ int main(int argc, char *argv[]) {
 		char input_buffer[LENGTH]; // Input buffer
 		int file_block_size, i = 0; // File block size, i
 
-        strcpy(file_ptr_name, file_ptr_path); // Copy file path to file name
-        strcat(file_ptr_name, filename); // Concatenate file name to file path
+        	strcpy(file_ptr_name, file_ptr_path); // Copy file path to file name
+        	strcat(file_ptr_name, filename); // Concatenate file name to file path
 		FILE *file_ptr = fopen(file_ptr_name, "r"); // Open file
 
 		if (file_ptr == NULL) { // If file does not exist
@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
 
 		bzero(input_buffer, LENGTH); // Clear input buffer
 
-        //Run loop while there is still data to write to server
+       		//Run loop while there is still data to write to server
 		while ((file_block_size = fread(input_buffer, sizeof(char), LENGTH, file_ptr)) > 0) { // While there is still data to write to server
 			printf("Data sent: %d / %d\n", i , file_block_size); // Print data sent
 
