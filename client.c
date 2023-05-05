@@ -70,11 +70,11 @@ int main(int argc, char *argv[]) {
 		return 1;
 	} // end if
 
-    if (strncmp(server_message, "User_not_in_group", strlen("User_not_in_group")) == 0) { // If user is not in the group
-        printf("Transfer failed since the user is not in the %s group.\n", dir); // Print error message
-        close(SID); // Close socket
-       	exit(EXIT_FAILURE); // Exit program
-    } // end if
+    	if (strncmp(server_message, "User_not_in_group", strlen("User_not_in_group")) == 0) { // If user is not in the group
+		printf("Transfer failed since the user is not in the %s group.\n", dir); // Print error message
+		close(SID); // Close socket
+		exit(EXIT_FAILURE); // Exit program
+    	} // end if
 
 	server_message[length] = '\0'; // Set end of string
 	printf("Server > %s\n", server_message); // Print server message
