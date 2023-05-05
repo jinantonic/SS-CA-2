@@ -9,7 +9,7 @@ Project Requirements:
 owner.
 7. The client must take a file name and path via console and transfer this to the server to be stored. The following directories are where
 files can be transferred to:
-- Manufacturing
-- Distribution
+  - Manufacturing
+  - Distribution
 These folders will be associated with the groups described in requirement (e).
 8. The server must inform the client if the transfer was successful or not.
