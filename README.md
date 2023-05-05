@@ -11,5 +11,6 @@ owner.
 files can be transferred to:
 - Manufacturing
 - Distribution
-<br>These folders will be associated with the groups described in requirement (e).
+
+These folders will be associated with the groups described in requirement (e).
 8. The server must inform the client if the transfer was successful or not.
