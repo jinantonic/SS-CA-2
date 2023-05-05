@@ -99,22 +99,22 @@ void *connection_handler(void *socket_des) { // Thread handler
 	groups = malloc(ngroups * sizeof(gid_t)); // Allocate memory for groups
 
 	if (getgrouplist(user_name, client_user_id, groups, &ngroups) == -1) { // If get group list fails
-        if (errno == EFAULT) { // If memory allocation error
-            perror("Memory allocation error!\n"); // Print error
-            exit(EXIT_FAILURE);
+		if (errno == EFAULT) { // If memory allocation error
+		    perror("Memory allocation error!\n"); // Print error
+		    exit(EXIT_FAILURE);
 
-        } else if (errno == EINVAL) { // If invalid arguments
-            perror("Invalid arguments!\n");
-            exit(EXIT_FAILURE);
+		} else if (errno == EINVAL) { // If invalid arguments
+		    perror("Invalid arguments!\n");
+		    exit(EXIT_FAILURE);
 
-        } else if (errno == EPERM) { // If insufficient permissions
-            perror("Insufficient permissions!\n");
-            exit(EXIT_FAILURE);
-			
-        } else if (errno == -1) { // If system error
-            perror("Error retrieving group list!\n");
-            exit(EXIT_FAILURE);
-        } // end if else if
+		} else if (errno == EPERM) { // If insufficient permissions
+		    perror("Insufficient permissions!\n");
+		    exit(EXIT_FAILURE);
+
+		} else if (errno == -1) { // If system error
+		    perror("Error retrieving group list!\n");
+		    exit(EXIT_FAILURE);
+		} // end if else if
 	} // end if
 
 	seteuid(client_user_id); // Set effective user ID
@@ -128,24 +128,24 @@ void *connection_handler(void *socket_des) { // Thread handler
 		exit(1);
 	} // end if
 
-    strcpy(directory, message); // Copy message to directory buffer
+    	strcpy(directory, message); // Copy message to directory buffer
 
-    authorised_transfer_group = getgrnam(directory); // Get group name
-    gid_t group_id = authorised_transfer_group -> gr_gid; // Get group ID
+    	authorised_transfer_group = getgrnam(directory); // Get group name
+    	gid_t group_id = authorised_transfer_group -> gr_gid; // Get group ID
 
-    if (!user_in_group(group_id, groups, ngroups)) { // If user is not in group
-        write(sock, "User_not_in_group", strlen("User_not_in_group")); // Send message to client
-        sleep(10); // Sleep for 10 seconds
-        close(sock); // Close socket
-        pthread_mutex_unlock(&lock_x); // Unlock mutex
-        pthread_exit(NULL); // Exit thread
+    	if (!user_in_group(group_id, groups, ngroups)) { // If user is not in group
+		write(sock, "User_not_in_group", strlen("User_not_in_group")); // Send message to client
+		sleep(10); // Sleep for 10 seconds
+		close(sock); // Close socket
+		pthread_mutex_unlock(&lock_x); // Unlock mutex
+		pthread_exit(NULL); // Exit thread
 		printf("\nTransfer cancelled since the user is not in the group!\n"); // Print transfer cancelled
 	} // end if
 
-    printf("Vefiried that the user is in the group. Sending a directory received message.\n"); // Print user is in group
-    write(sock, "Just_received_the_directory", strlen("Just_received_the_directory")); // Send message to client
+	printf("Vefiried that the user is in the group. Sending a directory received message.\n"); // Print user is in group
+	write(sock, "Just_received_the_directory", strlen("Just_received_the_directory")); // Send message to client
 
-    memset(message,'\0',sizeof(message)); // Clear message buffer
+    	memset(message,'\0',sizeof(message)); // Clear message buffer
 
 	READSIZE = recv(sock, message, 500, 0); // Receive filename from client
 	
@@ -215,9 +215,9 @@ int user_in_group(gid_t group_id, gid_t* groups, int num_groups) {
     for (int i = 0; i < num_groups; i++) { // For each group
 
         if (groups[i] == group_id) { // If group ID is equal to group ID
-			printf("User is in the group %d\n", groups[i]); // Print user is in group
-			return 1; // Return 1
-		} // end if
+		printf("User is in the group %d\n", groups[i]); // Print user is in group
+		return 1; // Return 1
+	} // end if
     } // end for
     return 0;
 } // end int user_in_group
