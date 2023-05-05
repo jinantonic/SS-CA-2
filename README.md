@@ -13,4 +13,5 @@ files can be transferred to:
 - Distribution
 
 These folders will be associated with the groups described in requirement (e).
+
 8. The server must inform the client if the transfer was successful or not.
