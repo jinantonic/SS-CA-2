@@ -1,3 +1,5 @@
+/*  Server Socket Program to run on the server  */
+
 #include <pwd.h>
 #include <grp.h>
 #include <errno.h>
@@ -34,7 +36,7 @@ int main() { // Main function
 		printf("Socket has been created successfully.\n"); // Print success
 	} // end if else
 
-	server.sin_port = htons(8082); // Set port
+	server.sin_port = htons(8082); // Set portSocket has been created successfully.
 	server.sin_family = AF_INET; // Set family
 	server.sin_addr.s_addr = INADDR_ANY; // Set address
 
@@ -58,6 +60,7 @@ int main() { // Main function
 			perror("Error creating thread!"); // Print error
 			return 1;
 		} // end if
+
 		pthread_join(client_conn[thread_count], NULL); // Join thread
 		thread_count++; // Increment thread count
 	} // end while
@@ -99,12 +102,15 @@ void *connection_handler(void *socket_des) { // Thread handler
         if (errno == EFAULT) { // If memory allocation error
             perror("Memory allocation error!\n"); // Print error
             exit(EXIT_FAILURE);
+
         } else if (errno == EINVAL) { // If invalid arguments
             perror("Invalid arguments!\n");
             exit(EXIT_FAILURE);
+
         } else if (errno == EPERM) { // If insufficient permissions
             perror("Insufficient permissions!\n");
             exit(EXIT_FAILURE);
+			
         } else if (errno == -1) { // If system error
             perror("Error retrieving group list!\n");
             exit(EXIT_FAILURE);
@@ -159,6 +165,7 @@ void *connection_handler(void *socket_des) { // Thread handler
 	printf("fr_name: %s\n", fr_name); // Print file read name
 
 	FILE *fr = fopen(fr_name, "w"); // Open file
+
 	if (fr == NULL) { // If file cannot be opened
 		printf("File %s can't be opened in the server! Errno: %d\n", fr_name, errno); // Print error
 		exit(EXIT_FAILURE); // Exit
@@ -169,9 +176,11 @@ void *connection_handler(void *socket_des) { // Thread handler
 
 	while ((file_block_size = recv(sock, output_buffer, LENGTH, 0)) > 0) { // While file block size is greater than 0
 		int write_sz = fwrite(output_buffer, sizeof(char), file_block_size, fr); // Write file
+
 		if (write_sz < file_block_size) { // If write size is less than file block size
 			perror("File write failed on the server!\n"); // Print error
 		} // end if
+
 		bzero(output_buffer, LENGTH); // Clear output buffer
 	} // end while
 
@@ -195,6 +204,7 @@ void *connection_handler(void *socket_des) { // Thread handler
 	if (READSIZE == 0) { // If read size is 0
 		puts("Client disconnected successfully.\n"); // Print client disconnected successfully
 		fflush(stdout);
+
 	} else if (READSIZE == -1) { // If read size is -1
 		perror("Receive failed!\n"); // Print error
 	} // end if else if
@@ -202,8 +212,8 @@ void *connection_handler(void *socket_des) { // Thread handler
 } // end void *connection_handler
 
 int user_in_group(gid_t group_id, gid_t* groups, int num_groups) {
-    //Check all groups and return 1 if the groups match signifying the user is in the group
     for (int i = 0; i < num_groups; i++) { // For each group
+
         if (groups[i] == group_id) { // If group ID is equal to group ID
 			printf("User is in the group %d\n", groups[i]); // Print user is in group
 			return 1; // Return 1
