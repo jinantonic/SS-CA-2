@@ -8,10 +8,5 @@ Project Requirements:
 6. The files transferred should be attributed to the transfer user. The file transferred to the server should show the transfer owner as its
 owner.
 7. The client must take a file name and path via console and transfer this to the server to be stored. The following directories are where
-files can be transferred to:
-- Manufacturing
-- Distribution
-
-These folders will be associated with the groups described in requirement (e).
-
+files can be transferred to Manufacturing / Distribution.<br>These folders will be associated with the groups described in requirement (e).
 8. The server must inform the client if the transfer was successful or not.
